@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="__AETHER_THEME__">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="aether-token" content="__AETHER_TOKEN__">
+<title>Aether</title>
+<link rel="stylesheet" href="/ui/app.css">
+<link rel="icon" href="/ui/logo.png">
+</head>
+<body>
+<div id="app">
+  <header class="titlebar">
+    <img class="logo" src="/ui/logo.png" alt="">
+    <div class="wordmark">AETHER</div>
+    <div class="subtitle">home of <span data-bind="name">Companion</span> · local</div>
+    <div class="mode-badge" id="modeBadge" hidden></div>
+    <button class="brain-bar" id="brainBar" title="Brain: click to swap it"><span class="g">🧠</span><span class="dim">…</span></button>
+    <div class="titlebar-right">
+      <button class="pill pink" data-action="pet">✦ Pet mode</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar">
+      <canvas class="space" id="sideSpace"></canvas>
+      <div class="space-dim"></div>
+      <div class="glass">
+        <div class="agent" id="agentHeader">
+          <img class="agent-pic" id="agentPic" alt="" data-action="profile">
+          <div class="agent-text" data-action="profile">
+            <div class="agent-name" data-bind="name">Companion</div>
+            <div class="agent-sub"><span class="ok-dot">●</span> <span id="agentSub">skills only</span></div>
+          </div>
+          <button class="icon-btn" id="agentMenuBtn" data-action="agent-menu" title="Menu">⋯</button>
+        </div>
+        <button class="new-chat" data-action="new-chat"><span class="ico" data-icon="plus"></span> New chat</button>
+        <div class="chat-lists" id="chatLists"></div>
+        <nav class="nav" id="nav">
+          <button data-view="brain"><span class="ico" data-icon="brain"></span>Brain</button>
+          <button data-view="dreams"><span class="ico" data-icon="moon"></span>Dreams</button>
+          <button data-view="images"><span class="ico" data-icon="image"></span>Creations</button>
+          <button data-view="heartbeat"><span class="ico" data-icon="heartpulse"></span>Heartbeat &amp; schedules</button>
+          <button data-view="calendar"><span class="ico" data-icon="calendar"></span>Calendar</button>
+          <button data-view="skills"><span class="ico" data-icon="skills"></span>Skills</button>
+        </nav>
+        <div class="side-bottom">
+          <button class="icon-btn big" data-action="library" title="Open a folder: the Drop box or its Workspace"><span class="ico" data-icon="folder"></span></button>
+          <button class="icon-btn big" data-action="search" title="Search (Ctrl+K)"><span class="ico" data-icon="search"></span></button>
+          <button class="icon-btn big" data-view="know" title="What Aether knows about you"><span class="ico" data-icon="person"></span></button>
+          <button class="icon-btn big" data-view="settings" title="Settings"><span class="ico" data-icon="gear"></span></button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="center" id="center"></section>
+
+    <aside class="right" id="right">
+      <div class="avatar-card">
+        <img id="avatarImg" alt="">
+        <div id="avatarBox" class="avatar-box"></div>
+        <div class="avatar-label">portrait</div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>MOOD</span><span class="faint">its choice</span></div>
+        <div id="moodBody"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>STATUS</span></div>
+        <div class="stat"><div class="stat-row"><span>Context</span><span class="mono" id="ctxText">–</span></div><div class="bar"><div id="ctxBar" style="background:var(--cyan)"></div></div></div>
+        <div class="stat"><div class="stat-row"><span>Reach-outs today</span><span class="mono" id="reachText">–</span></div><div class="bar"><div id="reachBar" style="background:var(--violet)"></div></div></div>
+        <div class="stat"><div class="stat-row"><span>Next heartbeat</span><span class="mono" id="hbText">–</span></div><div class="bar"><div id="hbBar" style="background:var(--gold)"></div></div></div>
+        <div class="dim small"><span id="quietLine">Quiet hours</span> · <span id="permLine">Permission: skills only</span> · <span id="memMode">test copy</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="statusline">
+    <span class="svc" id="svcLm"><i></i>LM Studio</span>
+    <span class="svc" id="svcKokoro"><i></i><b id="svcVoiceName" style="font-weight:inherit">voice</b></span>
+    <span class="svc" id="svcEars"><i></i>Ears</span>
+    <span class="svc off" id="svcDiscord" title="Discord"><i></i>Discord</span>
+    <span class="svc off" id="svcAvatar" title="Live2D avatar"><i></i>Avatar</span>
+    <span class="status-right mono" id="statusRight"></span>
+  </footer>
+</div>
+
+<div id="overlay"></div>
+<div id="toast"></div>
+<input type="file" id="filePick" hidden>
+<script src="/ui/avatar.js"></script>
+<script src="/ui/brain_tree.js"></script>
+<script src="/ui/brain_neuron.js"></script>
+<script src="/ui/mic.js"></script>
+<script src="/ui/brain3d.js"></script>
+<script src="/ui/app.js"></script>
+</body>
+</html>

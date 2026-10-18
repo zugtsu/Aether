@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="aether-token" content="__AETHER_TOKEN__">
+<title>Companion</title>
+<style>  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; font-family: "Segoe UI", sans-serif; user-select: none; }
+
+  #pet { position: absolute; left: 0; right: 0; top: 0; bottom: 46px; cursor: grab; }
+  #pet.dragging { cursor: grabbing; }
+  #pet canvas { width: 100%; height: 100%; display: block; }
+  #bubble { position: absolute; left: 8px; right: 8px; top: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(15,18,36,.88);
+    border: 1px solid rgba(155,123,255,.45); color: #e9edf5; font-size: 14px; line-height: 1.45; opacity: 0; transition: opacity .4s; pointer-events: none;
+    max-height: 40%; overflow: hidden; }
+  #bubble.on { opacity: 1; }
+  #bubble.you { color: #aab3c8; font-style: italic; border-color: rgba(120,200,255,.35); }
+
+  #bar { position: absolute; left: 8px; right: 8px; bottom: 6px; height: 34px; display: flex; align-items: center; gap: 6px; padding: 0 6px;
+    border-radius: 17px; background: rgba(15,18,36,.82); border: 1px solid rgba(155,123,255,.4); opacity: .45; transition: opacity .25s; }
+  body:hover #bar, #bar:focus-within, #bar.has-text { opacity: 1; }
+  #say { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: #e9edf5; font: 13px "Segoe UI", sans-serif; user-select: text; }
+  #say::placeholder { color: #8a93aa; }
+  #bar button { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; padding: 0;
+    background: transparent; color: #cfd6e6; }
+  #bar button:hover { background: rgba(155,123,255,.25); }
+  #bar svg { width: 15px; height: 15px; }
+
+  #mic { position: relative; }
+  #mic::after { content: ""; position: absolute; right: 2px; top: 2px; width: 7px; height: 7px; border-radius: 50%; background: #6b7389; }
+  #mic.listening::after { background: #46f09a; box-shadow: 0 0 6px #46f09a; animation: breathe 2.4s ease-in-out infinite; }
+  #mic.hearing::after { background: #ff5a6a; box-shadow: 0 0 8px #ff5a6a; }
+  #mic.paused::after { background: #f5c86b; }
+  #mic.off { color: #6b7389; }
+  #mic .slash { display: none; }
+  #mic.off .slash { display: block; }
+  @keyframes breathe { 50% { opacity: .35; } }
+</style>
+</head>
+<body>
+<div id="pet" title="drag to move · scroll to resize · right-click for options"></div>
+<div id="bubble"></div>
+<div id="bar">
+  <button id="mic" title="Listening. Click to turn the mic off.">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/><path class="slash" d="M4 4l16 16"/></svg>
+  </button>
+  <input id="say" placeholder="Talk to it…" autocomplete="off" spellcheck="true">
+  <button id="send" title="Send (Enter)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+  </button>
+</div>
+<script src="/ui/avatar.js"></script>
+<script src="/ui/mic.js"></script>
+<script src="/ui/pet.js"></script>
+</body>
+</html>
