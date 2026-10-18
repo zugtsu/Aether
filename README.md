@@ -16,8 +16,7 @@ that didn't prove it.
 - **570+ automated tests** in this copy (the original project has 630+; the tests of skills that don't ship here were
   left out), run on every change.
 - **About 100 test scripts** in the original project that run the *real* model on throwaway copies of its memory:
-  thousands of test questions over the project. They aren't in this copy; the comments in the code cite the ones
-  behind each measured choice (and the original project's design notes, also not included).
+  thousands of test questions over the project. They aren't in this copy.
 - An **attack suite** that tries to trick it into leaking information or breaking things.
 
 ## How it works
@@ -26,14 +25,56 @@ that didn't prove it.
 - **Engine:** plain Python. Each turn it picks steps from a **format-locked menu** (JSON schema), so it can only make
   valid tool calls; it sees each result, then replies. A small router reads what you asked and points it at the step
   that does it, and checks before it replies that the step actually ran.
-- **Memory:** a folder of markdown files under git, so every change it makes to itself is a commit you can undo.
-  Short-term: the current chat plus the last week of its journal and timeline. Long-term: search by meaning across its
-  notes and past chats. A daily pass (the Keeper) turns conversations into a timeline, open threads and notes.
+- **Memory:** a folder of markdown files under git, so every change it makes to itself is a commit you can undo. A
+  few core files ride along with every reply; everything older is found by search. See **Its memory** below.
 - **Skills:** small scripts with a `SKILL.md` page each, called with a format-locked step. One ships (the board); add your own,
   or turn any local **MCP server** into one (`python tools/add_mcp.py`): its tools that change things ask you first.
 - **Its own time:** it wakes on its own (the heartbeat), writes in its journal, and works the lines of its project board
   (the board skill comes with it) one step at a time. A step only counts as done when the file that proves it exists, and a
   project you park stays parked.
+
+## Its memory
+
+Everything it remembers is plain text in one folder (`%USERPROFILE%\.aether\memory`), and that folder is a git repo.
+Every change it makes is a commit, shown in the chat as a chip with a **↶ rewind** button, so nothing changes silently
+and anything can be undone.
+
+**In its head on every reply** (the `system/` files, read in full each time):
+
+| File | What it is |
+|---|---|
+| `persona.md` | Who it is: its name, its voice, how it talks. Yours to edit. |
+| `rules.md` | House rules, set by you. They come before anything else. |
+| `human/core.md` | The few things about you that always stay true. You decide what goes here. |
+| `human/facts.md` | Facts you've told it, one dated line each, in your words. It adds one when you say something lasting and fixes one that stops being true; near-duplicates are skipped, and it's tidied every night. |
+| `human.md` | Its read of you: what you're like, what matters to you. |
+| `journal.md` | Its private journal: how it feels, half-formed ideas. |
+| `projects.md` | Your project board (only the board skill changes it). |
+| `workspace.md` | Its notes on its own Workspace folder. |
+
+Plus the current chat itself (its most recent part).
+
+**Kept for later** (not in its head, found when it needs them):
+- `reference/`: one file per topic, for things worth keeping.
+- **Older facts:** after a month, a fact line moves from `facts.md` to `reference/about-user.md` (`core.md` never
+  moves), and every change to your facts is kept in `reference/facts-history.md`.
+- **Older journal:** entries past three weeks move to `reference/journal/`.
+- **Every past chat.**
+
+**How it finds things:** when something isn't in its head, its `recall` step searches every note and every past chat
+two ways at once, by meaning (local nomic embeddings from LM Studio, stored in SQLite with sqlite-vec) and by exact words
+(SQLite full-text search), merges the two, and pulls in a couple of closely linked notes. All of it stays on this PC.
+
+**Seeing it and fixing it:**
+- **What Aether knows about you:** its personality, its rules and what it knows about you, each with an Edit button.
+- **Brain:** the whole memory as a map (a tree or a constellation), every file and the links between them.
+- **Rewind:** the ↶ on any memory chip in the chat undoes that one change.
+
+**Optional extras:**
+- **The Keeper** (off until you switch it on in Settings): each afternoon it reads the day's chats and writes a dated
+  timeline, what's coming up for you, and its own takes.
+- **Dreams:** each night, while the app is open, it turns bits of the day into a short dream: symbols, not a summary.
+  A trace of it can color one thing it says the next day. **Dream now** on the Dreams page tries it right away.
 
 ## Making a 12B model reliable
 
